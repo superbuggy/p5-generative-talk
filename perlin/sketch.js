@@ -27,6 +27,7 @@ function draw () {
     for (let x = 0; x < rows; x++) {
       let angle = noise(xOffset, yOffset, timeOffset) * TWO_PI
       let vector = p5.Vector.fromAngle(angle)
+      vector.setMag(0.01)
       let flowFieldIndex = x + y * columns
       flowField[flowFieldIndex] = vector
       xOffset += increment
@@ -44,7 +45,7 @@ function draw () {
   }
 
   for (let i = 0; i < particles.length; i++) {
-    // particles[i].follow(flowField)
+    particles[i].follow(flowField)
     particles[i].update()
     particles[i].show()
   }
@@ -55,13 +56,15 @@ function draw () {
 class Particle {
   constructor () {
     this.position = createVector(random(width), random(height))
-    // this.velocity = createVector(0, 0)
-    this.velocity = p5.Vector.random2D()
+    this.velocity = createVector(0, 0)
+    // this.velocity = p5.Vector.random2D()
     this.acceleration = createVector(0, 0)
+    this.MAX_SPEED = 4
   }
 
   update () {
     this.velocity.add(this.acceleration)
+    this.velocity.limit(this.MAX_SPEED)
     this.position.add(this.velocity)
     this.acceleration.mult(0)
     this.edges()
@@ -87,7 +90,7 @@ class Particle {
   follow (vectors) {
     let x = floor(this.position.x / pixelsBetween)
     let y = floor(this.position.y / pixelsBetween)
-    let index = x + y * cols
+    let index = x + y * columns
     let force = vectors[index]
     this.applyForce(force)
   }
