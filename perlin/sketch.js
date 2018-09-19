@@ -20,7 +20,7 @@ function draw () {
     let xOffset = 0
     for (let x = 0; x < rows; x++) {
       let index = (x + y * width) * 4
-      let angle = noise(xOffset, yOffset) * TWO_PI
+      let angle = noise(xOffset, yOffset, timeOffset) * TWO_PI
       let vector = p5.Vector.fromAngle(angle)
       xOffset += increment
 
@@ -32,6 +32,7 @@ function draw () {
       pop()
     }
     yOffset += increment
+    timeOffset += 0.004
   }
 
   frameRateDisplay.innerHTML = floor(frameRate())
