@@ -11,7 +11,7 @@ document.body.appendChild(frameRateDisplay)
 
 function setup () {
   createCanvas(400, 400)
-  background(0, 0, 0)
+  // background(0, 0, 0)
   rows = floor(height / pixelsBetween)
   columns = floor(width / pixelsBetween)
   for (let i = 0; i < 1000; i++) {
@@ -20,25 +20,25 @@ function setup () {
 }
 
 function draw () {
-  background(255)
+  // background(255)
   let yOffset = 0
   for (let y = 0; y < rows; y++) {
     let xOffset = 0
     for (let x = 0; x < rows; x++) {
       let angle = noise(xOffset, yOffset, timeOffset) * TWO_PI
       let vector = p5.Vector.fromAngle(angle)
-      vector.setMag(0.01)
+      vector.setMag(0.05)
       let flowFieldIndex = x + y * columns
       flowField[flowFieldIndex] = vector
       xOffset += increment
 
-      stroke(190)
-      strokeWeight(1)
-      push()
-      translate(x * pixelsBetween, y * pixelsBetween)
-      rotate(vector.heading())
-      line(0, 0, pixelsBetween, 0)
-      pop()
+      // stroke(190)
+      // strokeWeight(1)
+      // push()
+      // translate(x * pixelsBetween, y * pixelsBetween)
+      // rotate(vector.heading())
+      // line(0, 0, pixelsBetween, 0)
+      // pop()
     }
     yOffset += increment
     timeOffset += 0.001
@@ -75,8 +75,9 @@ class Particle {
   }
 
   show () {
-    stroke(0)
-    strokeWeight(2)
+    // stroke(frameCount % 255, frameCount % 155 + 100, random(255))
+    stroke(0, frameCount % 155 + 100, 0, frameCount % 155 + 100)
+    strokeWeight(1)
     point(this.position.x, this.position.y)
   }
 
